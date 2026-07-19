@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lista de Desejos</title>
+<meta name="description" content="Uma coleção de coisas que eu quero viver." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-0: #0a0c15;
+    --bg-1: #10132399;
+    --ink: #eae6dd;
+    --ink-dim: #b9b6c9;
+    --muted: #7d81a0;
+    --gold: #d3ac78;
+    --violet: #8b8fd9;
+    --rule: rgba(234,230,221,0.10);
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(ellipse 120% 80% at 50% -10%, #171b30 0%, var(--bg-0) 45%, #060810 100%);
+    color: var(--ink);
+    font-family: "Fraunces", Georgia, serif;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---------- ambient background ---------- */
+  #sky{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .star{
+    position: absolute;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkle linear infinite;
+  }
+
+  @keyframes twinkle{
+    0%, 100% { opacity: var(--o-min, 0.15); }
+    50% { opacity: var(--o-max, 0.85); }
+  }
+
+  .aurora{
+    position: absolute;
+    width: 70vw;
+    height: 70vw;
+    max-width: 900px;
+    max-height: 900px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.16;
+    animation: drift 70s ease-in-out infinite alternate;
+  }
+  .aurora.a{ background: var(--violet); top: -20%; left: -15%; }
+  .aurora.b{ background: var(--gold); bottom: -25%; right: -10%; animation-duration: 90s; animation-delay: -20s; }
+
+  @keyframes drift{
+    0%   { transform: translate(0,0) scale(1); }
+    50%  { transform: translate(6%, 4%) scale(1.08); }
+    100% { transform: translate(-4%, 8%) scale(0.98); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .star, .aurora{ animation: none !important; }
+  }
+
+  /* ---------- layout ---------- */
+  main{
+    position: relative;
+    z-index: 1;
+    max-width: 660px;
+    margin: 0 auto;
+    padding: 14vh 1.5rem 22vh;
+  }
+
+  header{
+    text-align: center;
+    margin-bottom: 12vh;
+  }
+
+  .kicker{
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 1.1rem;
+    font-weight: 400;
+  }
+
+  h1{
+    font-size: clamp(2.2rem, 6vw, 3.1rem);
+    font-weight: 500;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    margin: 0 0 1rem;
+    color: var(--ink);
+  }
+
+  header p{
+    color: var(--ink-dim);
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.7;
+    max-width: 30ch;
+    margin: 0 auto;
+  }
+
+  .wish{
+    font-size: clamp(1.08rem, 2.1vw, 1.28rem);
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .wish strong{
+    font-weight: 600;
+    color: var(--gold);
+    font-style: normal;
+  }
+
+  .wish em{
+    font-style: italic;
+    color: var(--violet);
+  }
+
+  .entry{
+    padding: 2.6rem 0;
+  }
+
+  .divider{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    margin: 0;
+  }
+
+  .divider::before,
+  .divider::after{
+    content: "";
+    height: 1px;
+    width: 100%;
+    background: var(--rule);
+  }
+
+  .divider span{
+    flex: none;
+    color: var(--gold);
+    opacity: 0.55;
+    font-size: 0.75rem;
+  }
+
+  footer{
+    text-align: center;
+    margin-top: 10vh;
+    color: var(--muted);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 560px){
+    main{ padding: 10vh 1.25rem 16vh; }
+    header{ margin-bottom: 8vh; }
+    .entry{ padding: 2rem 0; }
+  }
+
+  ::selection{
+    background: var(--gold);
+    color: #0a0c15;
+  }
+</style>
+</head>
+<body>
+
+<div id="sky">
+  <div class="aurora a"></div>
+  <div class="aurora b"></div>
+</div>
+
+<main>
+
+  <header>
+    <span class="kicker">Olá, me chamo João Vitor</span>
+    <h1>Lista de Desejos</h1>
+    <p>Uma coleção de coisas que eu quero viver...</p>
+  </header>
+
+  <article id="wishes">
+
+    <p class="wish">Esquiar no Valle Nevado, no Chile, depois num Ski Resort em Niseko (Japão)</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Patinação no gelo, em Rideau Canal Skateway.</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Treinar arco e flecha tradicional num Kyudo Dojo.</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Apostar uma corrida (de costas) na Whitehaven Beach.</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Prender um balanço entre as árvores de Ubud, na Indonésia e observar as colinas a floresta&hellip;</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Inverter as regras do xadrez e jogar uma partida bêbado, usando um tabuleiro de madeira em Scottish Highlands (no topo)</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Jogar um boliche retrô no Japão ou EUA, daqueles com iluminação neon e milk-shakes, usando somente a mão não dominante, pra acertar a bola numa janela e pagá-la em dólar/ienes.</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero estender uma toalha em <strong>Lake Tekapo</strong>, na Nova Zelândia, começar um piquenique durante o pôr do sol e permanecer ali até que as primeiras estrelas apareçam. Depois, fotografar a Lua, tirar fotos com ela no fundo e fazer aquelas montagens bobas segurando na ponta dos dedos, observar estrelas&hellip;</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero varar estradas de carro escutando boas músicas, atravessar a <strong>Ring Road</strong>, na Islândia, cantando em idiomas diferentes, enquanto vulcões, geleiras e pássaros atravessam pelas janelas&hellip;</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Explorar livrarias&hellip; Bibliotecas&hellip; Ler coisas que eu nunca imaginei existir</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero passar uma madrugada inteira conversando num aeroporto durante um vôo de conexão enorme, observando pessoas indo embora para lugares diferentes enquanto invento histórias completamente absurdas sobre cada uma delas&hellip;</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Tomar banhos de chuva no verão, pulando em seguida numa piscina geotérmica, experimentando o contraste entre a parte quente da piscina até a região do pescoço e gelados pingos de chuva no meu rosto.</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Acampar em lugares inesquecíveis, em Torres del Paine, na Patagônia, no Parque Nacional de Banff no Canadá&hellip;</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Fazer uma leitura coletiva em um chalé à beira de um lago na <strong>Finlândia</strong> (ler um capítulo, discutir ideias, discordar, inventar interpretações absurdas, acrescentar coisinhas que nunca foram escritas no livro&hellip;)</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero criar uma tradição anual que não exista para mais ninguém, um ritual que só faça sentido pra quem eu contar&hellip; Visitar um lugar específico, ou dizer uma frase especial numa data especial do ano&hellip; Um <em>"feriado inédito"</em>, somente para nós, que independe do mundo.</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero aprender uma habilidade completamente inútil, mas difícil, em segredo&hellip; Quero que a primeira reação seja: <em>"Seu idiota&hellip; desde quando você sabe fazer isso?"</em></p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero explorar cidades novas obedecendo regras completamente idiotas. Entrar primeiro nas lojas com as vitrines mais coloridas, terminar nas monocromáticas, virar sempre na terceira rua à direita, comprar alguma coisa na primeira loja cujo nome comece com uma letra escolhida aleatoriamente&hellip;</p>
+    <div class="divider"><span>✶</span></div>
+
+    <p class="wish">Quero experimentar docinhos japoneses vendados, tentando adivinhar o sabor, a textura e os ingredientes antes de descobrir o nome. Quero errar quase todos, inventar nomes ridículos (descobrindo depois que aquilo era um doce tradicional com uma história milenar KKKKKKKKKK)</p>
+
+  </article>
+
+  <footer>Por enquanto... Vou continuar atualizando aqui, todos os dias, ao menos 8-15 desejos que penso por dia.</footer>
+
+</main>
+
+<script>
+  // gera um campo de estrelas sutil no fundo
+  (function(){
+    var sky = document.getElementById('sky');
+    var count = window.innerWidth < 600 ? 70 : 140;
+    var frag = document.createDocumentFragment();
+    for (var i = 0; i < count; i++){
+      var s = document.createElement('div');
+      s.className = 'star';
+      var size = (Math.random() * 1.6 + 0.6).toFixed(2);
+      s.style.width = size + 'px';
+      s.style.height = size + 'px';
+      s.style.top = (Math.random() * 100) + '%';
+      s.style.left = (Math.random() * 100) + '%';
+      s.style.setProperty('--o-min', (Math.random() * 0.2).toFixed(2));
+      s.style.setProperty('--o-max', (0.5 + Math.random() * 0.5).toFixed(2));
+      s.style.animationDuration = (2.5 + Math.random() * 5).toFixed(1) + 's';
+      s.style.animationDelay = (Math.random() * 5).toFixed(1) + 's';
+      frag.appendChild(s);
+    }
+    sky.appendChild(frag);
+  })();
+</script>
+
+</body>
+</html>
